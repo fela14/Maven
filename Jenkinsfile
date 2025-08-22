@@ -7,7 +7,13 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 withMaven(traceability: true) {
-                    sh 'mvn clean install'
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn clean install'
+                        } else {
+                            bat 'mvn clean install'
+                        }
+                    }
                 }
             }
         }
